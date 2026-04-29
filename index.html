@@ -135,12 +135,18 @@
       }
 
       .hero-slide {
-        width: 33.333vw;
+        width: 100vw;
         flex-shrink: 0;
         height: 100%;
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
+      }
+
+      @media (min-width: 768px) {
+        .hero-slide {
+          width: 33.333vw;
+        }
       }
     </style>
   </head>
@@ -301,7 +307,7 @@
 
       // --- Injection photos depuis photos.js ---
       const strip = document.getElementById('hero-strip');
-      const allSlides = [...PHOTOS.accueil, ...PHOTOS.accueil]; // doublon pour boucle infinie
+      const allSlides = [...PHOTOS.accueil, ...PHOTOS.accueil, ...PHOTOS.accueil]; // triple pour boucle infinie mobile et desktop
       allSlides.forEach(src => {
         const div = document.createElement('div');
         div.className = 'hero-slide';
