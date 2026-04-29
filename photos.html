@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comite des Fetes de Montpitol - Photos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              festiveBlue: "#1D4ED8",
+              festiveOrange: "#F97316",
+              festiveDark: "#0F172A",
+            },
+          },
+        },
+      };
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      /* --- ANIMATIONS VISUELLES (REMISES) --- */
+      @keyframes gradient-party {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      .party-night {
+        background: linear-gradient(120deg, #1e3a8a, #312e81, #9a3412, #1e3a8a);
+        background-size: 300% 300%;
+        animation: gradient-party 14s ease infinite;
+      }
+      .confetti-piece {
+        position: fixed;
+        top: -10px;
+        width: 8px;
+        height: 14px;
+        opacity: 0.9;
+        border-radius: 2px;
+        z-index: 0;
+        pointer-events: none;
+      }
+      @keyframes blink-bulb {
+        0%, 100% { opacity: 0.45; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.2); }
+      }
+      .bulb {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 9999px;
+        box-shadow: 0 0 12px currentColor;
+        animation: blink-bulb 1.4s ease-in-out infinite;
+        z-index: 30; /* Au-dessus du rail */
+      }
+
+      /* --- MÉCANIQUE DE LA ROUE STABLE (GARDÉE) --- */
+      @keyframes wheel-spin {
+        from { transform: translate(-50%, -50%) rotate(0deg); }
+        to { transform: translate(-50%, -50%) rotate(360deg); }
+      }
+      @keyframes counter-spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(-360deg); }
+      }
+
+      .wheel-frame {
+        position: relative;
+        width: min(85vw, 600px);
+        height: min(85vw, 600px);
+        margin: 40px auto 120px auto; /* Marge en bas pour les pieds */
+      }
+
+      .rotating-structure {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        animation: wheel-spin 24s linear infinite;
+        transform-origin: center;
+      }
+
+      /* Gestion de la pause */
+      .paused .rotating-structure,
+      .paused .nacelle-image {
+        animation-play-state: paused;
+      }
+
+      .wheel-rim {
+        position: absolute;
+        inset: 0;
+        border: 8px solid rgba(255, 255, 255, 0.65);
+        border-radius: 50%;
+        box-shadow: 0 0 45px rgba(255, 255, 255, 0.25);
+      }
+
+      .spoke {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 2px;
+        height: 50%;
+        background: rgba(255, 255, 255, 0.4);
+        transform-origin: top center;
+      }
+
+      .nacelle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 50%;
+        transform-origin: top center;
+      }
+
+      .nacelle-image {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: min(24vw, 130px);
+        height: min(24vw, 130px);
+        translate: -50% 50%; 
+        border: 4px solid white;
+        border-radius: 18px;
+        background-size: cover;
+        background-position: center;
+        box-shadow: 0 12px 24px rgba(15, 23, 42, 0.35);
+        cursor: pointer;
+        animation: counter-spin 24s linear infinite;
+      }
+
+      .nacelle-image:hover {
+        border-color: #F97316;
+        scale: 1.05;
+        z-index: 100;
+      }
+
+      /* STRUCTURE FIXE (SUPPORT) GÉOMÉTRIQUE */
+      .hub {
+        position: absolute;
+        top: 50%; left: 50%;
+        translate: -50% -50%;
+        width: 40px; height: 40px;
+        background: radial-gradient(circle, #fde047 0%, #f97316 70%);
+        border: 4px solid white;
+        border-radius: 50%;
+        z-index: 50;
+        box-shadow: 0 0 20px rgba(251, 191, 36, 0.8);
+      }
+      .leg {
+        position: absolute;
+        top: 50%; left: 50%;
+        width: 12px; height: 90%; /* Descend plus bas */
+        background: linear-gradient(to bottom, #cbd5e1, #475569);
+        transform-origin: top center;
+        z-index: 5;
+      }
+      .base {
+        position: absolute;
+        bottom: -35%; left: 50%; /* Ajusté pour les pieds plus longs */
+        translate: -50% 0;
+        width: 280px; height: 20px;
+        background: linear-gradient(to right, #cbd5e1, #94a3b8, #cbd5e1);
+        border-radius: 9999px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        z-index: 6;
+      }
+    </style>
+  </head>
+  <body id="partyBody" class="bg-gradient-to-br from-fuchsia-100 via-orange-50 to-blue-100 text-slate-800 antialiased party-night min-h-screen">
+    <div class="pointer-events-none fixed inset-0 z-0 opacity-80 [background-image:radial-gradient(circle_at_12%_18%,rgba(251,191,36,0.35)_0,transparent_28%),radial-gradient(circle_at_82%_12%,rgba(251,146,60,0.3)_0,transparent_25%),radial-gradient(circle_at_25%_82%,rgba(59,130,246,0.25)_0,transparent_30%),radial-gradient(circle_at_92%_75%,rgba(217,70,239,0.2)_0,transparent_24%)]"></div>
+    <canvas id="fireworksCanvas" class="pointer-events-none fixed inset-0 z-0"></canvas>
+    <div id="confettiLayer" class="pointer-events-none fixed inset-0 z-0 overflow-hidden"></div>
+
+    <header class="sticky top-0 z-50 border-b border-blue-100 bg-white/90 backdrop-blur">
+      <nav class="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-y-2 px-4 py-3 sm:px-6 lg:px-8">
+        <a href="index.html" class="flex items-center gap-2 text-sm font-bold text-festiveBlue sm:text-base">
+          <i data-lucide="party-popper" class="h-5 w-5 text-festiveOrange"></i>
+          <span>CDF Montpitol</span>
+        </a>
+        <ul class="flex flex-wrap items-center justify-end gap-2 text-xs font-medium sm:gap-4 sm:text-sm">
+          <li><a href="index.html" class="rounded-full px-3 py-2 text-slate-700 transition hover:bg-blue-50 hover:text-festiveBlue">Accueil</a></li>
+          <li><a href="evenements.html" class="rounded-full px-3 py-2 text-slate-700 transition hover:bg-blue-50 hover:text-festiveBlue">Calendrier</a></li>
+          <li><a href="photos.html" class="rounded-full bg-blue-50 px-3 py-2 text-festiveBlue transition hover:bg-blue-100">Photos</a></li>
+          <li><a href="contact.html" class="rounded-full px-3 py-2 text-slate-700 transition hover:bg-blue-50 hover:text-festiveBlue">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="relative z-10 mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-8 text-center">
+      <section class="rounded-2xl border border-white/20 bg-slate-900/45 p-6 shadow-xl backdrop-blur-sm text-white inline-block mb-10">
+        <h1 class="text-3xl font-extrabold sm:text-4xl">Galerie Photos</h1>
+        <p class="mt-3 max-w-3xl text-sm sm:text-base text-white/90">
+          Les meilleurs moments du Comite des Fetes de Montpitol.
+        </p>
+        <p class="mt-4 inline-flex items-center gap-2 rounded-full border border-white/30 bg-slate-950/55 px-4 py-2 text-xs font-semibold">
+          <i data-lucide="mouse-pointer-click" class="h-4 w-4"></i>
+          Clique sur une photo pour l'agrandir en grand format.
+        </p>
+      </section>
+
+      <div id="wheelApp" class="wheel-frame">
+        <div class="hub"></div>
+        <div class="leg -rotate-[18deg]"></div>
+        <div class="leg rotate-[18deg]"></div>
+        <div class="base"></div>
+
+        <button id="pBtn" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[100] bg-white/20 hover:bg-white/40 border-2 border-white w-14 h-14 rounded-full backdrop-blur-md flex items-center justify-center text-white">
+            <i data-lucide="pause" id="pIcon"></i>
+        </button>
+
+        <div class="rotating-structure">
+          <div class="wheel-rim"></div>
+          
+          <span class="bulb text-yellow-300" style="top: 0%; left: 50%; animation-delay: 0s"></span>
+          <span class="bulb text-fuchsia-400" style="top: 15%; left: 85%; animation-delay: 0.2s"></span>
+          <span class="bulb text-cyan-300" style="top: 50%; left: 100%; animation-delay: 0.4s"></span>
+          <span class="bulb text-orange-300" style="top: 85%; left: 85%; animation-delay: 0.6s"></span>
+          <span class="bulb text-lime-300" style="top: 100%; left: 50%; animation-delay: 0.8s"></span>
+          <span class="bulb text-yellow-300" style="top: 85%; left: 15%; animation-delay: 1s"></span>
+          <span class="bulb text-pink-400" style="top: 50%; left: 0%; animation-delay: 1.2s"></span>
+          <span class="bulb text-cyan-300" style="top: 15%; left: 15%; animation-delay: 1.4s"></span>
+
+          <div id="roue-nacelles"></div>
+        </div>
+      </div>
+    </main>
+
+    <div id="lightbox" class="fixed inset-0 z-[200] hidden items-center justify-center bg-black/90 p-4 backdrop-blur-sm">
+      <button id="closeLb" class="absolute right-6 top-6 text-white bg-white/10 p-2 rounded-full hover:bg-white/20"><i data-lucide="x" class="h-8 w-8"></i></button>
+      <img id="lbImg" src="" class="max-h-[85vh] max-w-full rounded-lg shadow-2xl border-2 border-white/20">
+    </div>
+
+    <footer class="bg-festiveDark py-8 text-slate-300 relative z-10">
+      <div class="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 text-sm sm:px-6">
+        <p>Mairie de Montpitol - 31380 Montpitol</p>
+        <p><a href="mentions-legales.html" class="hover:text-white underline underline-offset-4">Mentions legales</a></p>
+      </div>
+    </footer>
+
+    <script src="photos.js"></script>
+    <script>
+      lucide.createIcons();
+
+      // --- Génération dynamique des nacelles depuis photos.js ---
+      const roueContainer = document.getElementById('roue-nacelles');
+      const photos = PHOTOS.galerie;
+      const angleStep = 360 / photos.length;
+      photos.forEach((src, i) => {
+        const angle = angleStep * i;
+        roueContainer.innerHTML += `
+          <div class="nacelle" style="transform: rotate(${angle}deg);">
+            <div class="spoke"></div>
+            <div class="nacelle-image photo-item" data-full="${src}" style="background-image:url('${src}')"></div>
+          </div>`;
+      });
+
+      // --- Gestion de la Grande Roue (Pause) ---
+      const app = document.getElementById('wheelApp');
+      const btn = document.getElementById('pBtn');
+      const icon = document.getElementById('pIcon');
+      
+      btn.addEventListener('click', () => {
+        app.classList.toggle('paused');
+        const isPaused = app.classList.contains('paused');
+        icon.setAttribute('data-lucide', isPaused ? 'play' : 'pause');
+        lucide.createIcons();
+      });
+
+      // --- Gestion de la Lightbox ---
+      const lb = document.getElementById('lightbox');
+      const lbImg = document.getElementById('lbImg');
+      document.querySelectorAll('.photo-item').forEach(item => {
+        item.addEventListener('click', () => {
+          lbImg.src = item.dataset.full;
+          lb.classList.remove('hidden');
+          lb.classList.add('flex');
+        });
+      });
+      document.getElementById('closeLb').onclick = () => { lb.classList.add('hidden'); lb.classList.remove('flex'); };
+
+      // --- Script Feux d'artifice & Confettis (REMIS) ---
+      const canvas = document.getElementById("fireworksCanvas");
+      const ctx = canvas.getContext("2d");
+      const confettiLayer = document.getElementById("confettiLayer");
+      const particles = [];
+
+      function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+      
+      function burst(x, y) {
+        const colors = ["#f97316", "#38bdf8", "#f43f5e", "#fde047", "#c084fc", "#22c55e"];
+        for (let i = 0; i < 60; i++) {
+          const angle = (Math.PI * 2 * i) / 60;
+          const speed = Math.random() * 3.5 + 1.5;
+          particles.push({ 
+            x, y, 
+            vx: Math.cos(angle) * speed, 
+            vy: Math.sin(angle) * speed, 
+            life: 80 + Math.random() * 30, 
+            color: colors[Math.floor(Math.random() * colors.length)] 
+          });
+        }
+      }
+
+      function animateFireworks() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.x += p.vx; p.y += p.vy; p.vy += 0.03; // Gravité
+          p.life -= 1;
+          ctx.globalAlpha = Math.max((p.life / 110), 0);
+          ctx.fillStyle = p.color;
+          ctx.beginPath(); ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2); ctx.fill();
+          if (p.life <= 0) particles.splice(i, 1);
+        }
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(animateFireworks);
+      }
+
+      function spawnConfetti() {
+        const piece = document.createElement("div");
+        piece.className = "confetti-piece";
+        piece.style.left = `${Math.random() * 100}vw`;
+        piece.style.background = ["#f97316", "#3b82f6", "#eab308", "#ec4899", "#22c55e"][Math.floor(Math.random() * 5)];
+        piece.animate([
+          { transform: "translateY(0) rotate(0deg)", opacity: 1 }, 
+          { transform: `translateY(105vh) rotate(${Math.random() * 720}deg)`, opacity: 0.8 }
+        ], { 
+          duration: 3000 + Math.random() * 2000, 
+          easing: "linear" 
+        });
+        confettiLayer.appendChild(piece);
+        setTimeout(() => piece.remove(), 5000);
+      }
+
+      function randomBurst() { 
+        // Tire les feux d'artifice dans la moitié supérieure de l'écran
+        burst(Math.random() * canvas.width, Math.random() * (canvas.height * 0.5) + 50); 
+      }
+
+      window.addEventListener("resize", resizeCanvas);
+      resizeCanvas();
+      animateFireworks();
+      
+      // Salve initiale
+      setTimeout(() => burst(window.innerWidth * 0.25, 150), 300);
+      setTimeout(() => burst(window.innerWidth * 0.75, 200), 700);
+      
+      // Boucles infinies
+      setInterval(randomBurst, 1500); // Feux d'artifice toutes les 1.5s
+      setInterval(spawnConfetti, 200); // Confettis en continu
+    </script>
+  </body>
+</html>
