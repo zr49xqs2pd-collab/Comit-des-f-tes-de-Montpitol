@@ -20,20 +20,7 @@
     </script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-      @keyframes blink-party {
-        0%,
-        100% {
-          opacity: 0.45;
-          transform: scale(1);
-        }
-        50% {
-          opacity: 1;
-          transform: scale(1.15);
-        }
-      }
-      .party-dot {
-        animation: blink-party 1.9s ease-in-out infinite;
-      }
+      /* --- ANIMATIONS VISUELLES (REMISES) --- */
       @keyframes gradient-party {
         0% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
@@ -53,6 +40,19 @@
         border-radius: 2px;
         z-index: 0;
         pointer-events: none;
+      }
+      @keyframes blink-bulb {
+        0%, 100% { opacity: 0.45; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.2); }
+      }
+      .bulb {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 9999px;
+        box-shadow: 0 0 12px currentColor;
+        animation: blink-bulb 1.4s ease-in-out infinite;
+        z-index: 30; /* Au-dessus du rail */
       }
     </style>
     </head>
