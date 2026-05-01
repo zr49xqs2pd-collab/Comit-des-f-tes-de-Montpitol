@@ -55,22 +55,22 @@
         pointer-events: none;
       }
     </style>
-  </head>
-  <body id="partyBody" class="bg-gradient-to-br from-orange-100 via-fuchsia-50 to-blue-100 text-slate-800 antialiased party-night">
-    <div class="pointer-events-none fixed inset-0 z-0 opacity-70 [background-image:radial-gradient(circle_at_10%_20%,rgba(251,146,60,0.35)_0,transparent_26%),radial-gradient(circle_at_85%_20%,rgba(59,130,246,0.3)_0,transparent_28%),radial-gradient(circle_at_20%_86%,rgba(236,72,153,0.25)_0,transparent_30%)]"></div>
+ </head>
+  <body id="partyBody" class="bg-gradient-to-br from-blue-100 via-orange-50 to-fuchsia-100 text-slate-800 antialiased">
+    <div class="pointer-events-none fixed inset-0 z-0 confetti-bg opacity-70"></div>
     <canvas id="fireworksCanvas" class="pointer-events-none fixed inset-0 z-0"></canvas>
     <div id="confettiLayer" class="pointer-events-none fixed inset-0 z-0 overflow-hidden"></div>
     <header class="sticky top-0 z-50 border-b border-blue-100 bg-white/90 backdrop-blur">
       <nav class="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-y-2 px-4 py-3 sm:px-6 lg:px-8">
         <a href="index.html" class="flex items-center gap-2 text-sm font-bold text-festiveBlue sm:text-base">
-          <i data-lucide="party-popper" class="h-5 w-5 text-festiveOrange"></i>
+          <img src="assets/photos/logo-cdf.png" alt="Logo CDF" class="h-8 w-8 rounded-full object-cover" />
           <span>Comité des fêtes de Montpitol</span>
         </a>
         <ul class="flex flex-wrap items-center justify-end gap-2 text-xs font-medium sm:gap-4 sm:text-sm">
-          <li><a href="index.html" class="rounded-full px-3 py-2 text-slate-700 transition hover:bg-blue-50 hover:text-festiveBlue">Accueil</a></li>
+          <li><a href="index.html" class="rounded-full bg-blue-50 px-3 py-2 text-festiveBlue transition">Accueil</a></li>
           <li><a href="evenements.html" class="rounded-full px-3 py-2 text-slate-700 transition hover:bg-blue-50 hover:text-festiveBlue">Calendrier</a></li>
           <li><a href="photos.html" class="rounded-full px-3 py-2 text-slate-700 transition hover:bg-blue-50 hover:text-festiveBlue">Photos</a></li>
-          <li><a href="contact.html" class="rounded-full bg-blue-50 px-3 py-2 text-festiveBlue transition">Contact</a></li>
+          <li><a href="contact.html" class="rounded-full px-3 py-2 text-slate-700 transition hover:bg-blue-50 hover:text-festiveBlue">Contact</a></li>
         </ul>
       </nav>
     </header>
